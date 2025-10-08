@@ -1,0 +1,17 @@
+[
+    {
+        "index": 1,
+        "timestamp": "2025-10-08 08:36:55",
+        "data": "Arjun registered Laptop"
+    },
+    {
+        "index": 2,
+        "timestamp": "2025-10-08 08:38:29",
+        "data": "Device 1 submitted for recycling"
+    },
+    {
+        "index": 3,
+        "timestamp": "2025-10-08 08:38:54",
+        "data": "Device 1 (Laptop) recycled - materials recovered: Aluminum, Glass, Gold (tiny trace), Copper, Plastic"
+    }
+]

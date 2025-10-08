@@ -1,0 +1,15 @@
+[
+    {
+        "id": 1,
+        "owner": "Arjun",
+        "type": "Laptop",
+        "status": "recycled",
+        "materials": [
+            "Aluminum",
+            "Glass",
+            "Gold (tiny trace)",
+            "Copper",
+            "Plastic"
+        ]
+    }
+]

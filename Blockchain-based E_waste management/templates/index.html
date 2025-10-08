@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Waste Management</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f2f5f7; }
+        h2 { color: #2f86a6; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        th { background-color: #2f86a6; color: white; }
+        .btn { padding: 5px 10px; color: white; background-color: #2f86a6; border: none; cursor: pointer; text-decoration: none; }
+        .btn:hover { background-color: #1f5d7a; }
+        form { margin-bottom: 30px; }
+        input[type=text] { padding: 5px; margin-right: 10px; }
+        .badge { padding: 3px 8px; border-radius: 5px; color: white; font-weight: bold; }
+        .active { background-color: #28a745; }
+        .submitted { background-color: #ffc107; color: black; }
+        .recycled { background-color: #6c757d; }
+    </style>
+</head>
+<body>
+    <h2>E-Waste Management Dashboard</h2>
+
+    <!-- Register Device Form -->
+    <form action="{{ url_for('register_device') }}" method="POST">
+        <input type="text" name="owner" placeholder="Owner Name" required>
+        <input type="text" name="type" placeholder="Device Type (Mobile/Laptop/TV/Battery/Other)" required>
+        <button type="submit" class="btn">Register Device</button>
+    </form>
+
+    <!-- Devices Table -->
+    <h3>Devices</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Owner</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Materials Recovered</th>
+            <th>Actions</th>
+        </tr>
+        {% for d in devices %}
+        <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.owner }}</td>
+            <td>{{ d.type }}</td>
+            <td>
+                {% if d.status == 'active' %}
+                    <span class="badge active">Active</span>
+                {% elif d.status == 'submitted' %}
+                    <span class="badge submitted">Submitted</span>
+                {% else %}
+                    <span class="badge recycled">Recycled</span>
+                {% endif %}
+            </td>
+            <td>{% if d.materials %}{{ d.materials|join(', ') }}{% else %}-{% endif %}</td>
+            <td>
+                {% if d.status == 'active' %}
+                    <a href="{{ url_for('submit_device', id=d.id) }}" class="btn">Submit</a>
+                {% elif d.status == 'submitted' %}
+                    <a href="{{ url_for('recycle_device', id=d.id) }}" class="btn">Recycle</a>
+                {% else %}
+                    Recycled
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Users Rewards Table -->
+    <h3>User Rewards</h3>
+    <table>
+        <tr>
+            <th>Owner</th>
+            <th>Reward Points</th>
+        </tr>
+        {% for owner, points in rewards.items() %}
+        <tr>
+            <td>{{ owner }}</td>
+            <td>{{ points }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Blockchain Ledger Table -->
+    <h3>Blockchain Ledger</h3>
+    <table>
+        <tr>
+            <th>Index</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+        </tr>
+        {% for block in chain %}
+        <tr>
+            <td>{{ block.index }}</td>
+            <td>{{ block.timestamp }}</td>
+            <td>{{ block.data }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
